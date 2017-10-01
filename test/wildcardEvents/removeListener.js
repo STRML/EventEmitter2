@@ -251,7 +251,11 @@ module.exports = simpleEvents({
     listeners = emitter.listeners(type1);
     test.equal(listeners.length, 0, 'should be 0');
 
-    test.expect(1);
+    test.equal(Object.keys(emitter.listenerTree).length, 1, 'should be 1');
+    test.equal(emitter.listenerTree.just.another.event._listeners.length, 1, 'should be 1');
+    test.equal(emitter.listeners(type2).length, 1, 'should be 1');
+
+    test.expect(4);
     test.done();
   },
 
@@ -278,7 +282,11 @@ module.exports = simpleEvents({
     listeners = emitter.listeners(type1);
     test.equal(listeners.length, 0, 'should be 0');
 
-    test.expect(1);
+    test.equal(Object.keys(emitter.listenerTree).length, 1, 'should be 1');
+    test.equal(emitter.listenerTree.just.another.event._listeners.length, 1, 'should be 1');
+    test.equal(emitter.listeners(type2).length, 1, 'should be 1');
+
+    test.expect(4);
     test.done();
   },
 
@@ -395,29 +403,30 @@ module.exports = simpleEvents({
     });
 
     var count = 0;
+    var badCount = 0;
     var goodCallback = function () {
-      count += 1;
+      count++;
     };
     var badCallback = function () {
-      count += 1;
+      count++;
+      badCount++;
     };
 
     // So that foo.bar.listeners is an Array
-    emitter.on("foo.bar.baz", goodCallback);
-    emitter.on("foo.bar.baz", goodCallback);
+    emitter.on('foo.bar.baz', goodCallback);
+    emitter.on('foo.bar.baz', goodCallback);
 
     // Add and remove one with wildcard
-    emitter.on("foo.*.*", badCallback);
-    var returnValue = emitter.off("foo.*.*", badCallback);
+    emitter.on('foo.*.*', badCallback);
+    var returnValue = emitter.off('foo.*.*', badCallback);
 
-    emitter.emit("foo.bar.baz");
+    emitter.emit('foo.bar.baz');
 
     test.equal(count, 2, 'should call only good callbacks');
+    test.equal(badCount, 0, 'should call not call bad callbacks');
     test.equal(returnValue, emitter, 'should allow chaining');
 
-    test.expect(2);
+    test.expect(3);
     test.done();
   }
-
-
 });
