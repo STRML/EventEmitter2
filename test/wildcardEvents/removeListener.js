@@ -412,7 +412,6 @@ module.exports = simpleEvents({
       badCount++;
     };
 
-    // So that foo.bar.listeners is an Array
     emitter.on('foo.bar.baz', goodCallback);
     emitter.on('foo.bar.baz', goodCallback);
 
@@ -427,6 +426,44 @@ module.exports = simpleEvents({
     test.equal(returnValue, emitter, 'should allow chaining');
 
     test.expect(3);
+    test.done();
+  },
+
+  '13. Very long wildcards' : function (test) {
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var count = 0;
+    function cb() {
+      count++;
+    }
+    var short = 'foo.bar.baz';
+    var long = 'foo.bar.baz.biff.bozz';
+
+    emitter.on('foo.*.*.*.*', cb);
+    emitter.on('foo.**', cb);
+
+    test.equal(emitter.listeners(short).length, 1, 'only one matching listener for short');
+    test.equal(emitter.listeners(long).length, 2, 'two matching listeners for long');
+
+    emitter.emit(short);
+    test.equal(count, 1, 'only first should match');
+
+    emitter.emit(long);
+    test.equal(count, 3, 'both');
+
+    emitter.removeListener('foo.*.*.*.*', cb);
+    test.equal(emitter.listeners(short).length, 1, 'only one matching listener');
+    test.equal(emitter.listeners(long).length, 1, 'long listener removed');
+
+    emitter.removeListener('foo.**', cb);
+    test.equal(emitter.listeners(short).length, 0, 'short listener removed');
+
+    test.equal(Object.keys(emitter.listenerTree).length, 0, 'should not have any keys in tree');
+
+    test.expect(8);
     test.done();
   }
 });
