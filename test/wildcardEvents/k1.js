@@ -34,12 +34,10 @@ e.on('foo', function() {
 });
 e.on('*', function(name) {
   ++countWildcard;
-  console.log(this.event, name);
   assert.equal(this.event, name);
 });
 e.on('**', function(name) {
   ++counMultiLevelWildcard;
-  console.log(this.event, name);
   assert.equal(this.event, name);
 });
 e.onAny(function(name) {

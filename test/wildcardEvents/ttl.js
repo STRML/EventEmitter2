@@ -187,7 +187,6 @@ module.exports = simpleEvents({
     var type = 'test1.**';
     var functionA = function(n) {
       return function() {
-        console.log(n, this.event);
         test.ok(true, 'Event was fired');
       };
     }

@@ -382,7 +382,6 @@ module.exports = simpleEvents({
     test.equal(listeners.length, 0, 'should be 0');
     listeners = emitter.listeners(types[1]);
     test.equal(listeners.length, 0, 'should be 0');
-    console.log(JSON.stringify(emitter.listenerTree));
     test.equal(Object.keys(emitter.listenerTree).length, 0, 'should not have any keys in tree');
 
     test.expect(5);
