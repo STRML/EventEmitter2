@@ -20,6 +20,7 @@
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
     "benchmark": ">= 0.2.2",
+    "microtime": "^2.1.6",
     "nodeunit": "*"
   },
   "main": "./lib/eventemitter2.js",
