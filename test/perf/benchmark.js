@@ -6,10 +6,9 @@ var EventEmitter = require('events').EventEmitter;
 var emitter = new EventEmitter;
 
 var EventEmitter2 = require('../../lib/eventemitter2').EventEmitter2;
-var emitter2 = new EventEmitter2;
+var emitter2 = new EventEmitter2();
 
-var EventEmitter3 = require('events').EventEmitter;
-var emitter3 = new EventEmitter3;
+var emitter2wild = new EventEmitter2({wildcard: true});
 
 function foo() {
   return true;
@@ -19,9 +18,9 @@ suite
 
   .add('EventEmitterHeatUp', function() {
 
-      emitter3.on('test3', foo);
-      emitter3.emit('test3');
-      emitter3.removeAllListeners('test3');
+    emitter.on('test3', foo);
+    emitter.emit('test3');
+    emitter.removeAllListeners('test3');
 
   })
   .add('EventEmitter', function() {
@@ -41,9 +40,9 @@ suite
 
   .add('EventEmitter2 (wild)', function() {
 
-    emitter2.on('test2.foo', foo);
-    emitter2.emit('test2.foo');
-    emitter2.removeAllListeners('test2.foo');
+    emitter2wild.on('test2.foo', foo);
+    emitter2wild.emit('test2.foo');
+    emitter2wild.removeAllListeners('test2.foo');
 
   })
 
