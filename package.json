@@ -18,8 +18,12 @@
   ],
   "license": "MIT",
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
+  "dependencies": {
+
+  },
   "devDependencies": {
     "benchmark": ">= 0.2.2",
+    "eslint": "^4.8.0",
     "microtime": "^2.1.6",
     "nodeunit": "*"
   },
@@ -37,8 +41,5 @@
   "typings": "./eventemitter2.d.ts",
   "typescript": {
     "definition": "./eventemitter2.d.ts"
-  },
-  "dependencies": {
-    "eslint": "^4.8.0"
   }
 }
