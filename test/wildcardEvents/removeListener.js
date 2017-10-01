@@ -308,12 +308,88 @@ module.exports = simpleEvents({
     emitter.removeListener(type1, f);
     listeners = emitter.listeners(type1);
     test.equal(listeners.length, 0, 'should be 0');
+    test.equal(Object.keys(emitter.listenerTree).length, 0, 'should not have any keys in tree');
 
-    test.expect(2);
+    test.expect(3);
     test.done();
   },
 
-  '11. Add some listeners with wildcards and remove only the wildcard' : function (test) {
+  '11. Reporting many listeners on wildcard all should removed by dual wildcard.' : function (test) {
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var type1 = 'ns.*.card',
+        type2 = 'ns.wild.card',
+        listeners;
+
+    var f = function () {
+      test.ok(true, 'event was raised');
+    };
+
+    emitter.on(type1, f);
+    emitter.on(type2, f);
+
+    // check number of listeners by wild card
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 2, 'should only have 2');
+
+    // remove by wild card should remove both
+    emitter.removeListener('ns.**', f);
+    listeners = emitter.listeners(type1);
+    test.equal(listeners.length, 0, 'should be 0');
+    test.equal(Object.keys(emitter.listenerTree).length, 0, 'should not have any keys in tree');
+
+    test.expect(3);
+    test.done();
+  },
+
+  '12. Reporting many listeners on wildcard all should removed by dual wildcard, mixed with single.' : function (test) {
+
+    var emitter = new EventEmitter2({
+      wildcard : true,
+      verbose : true
+    });
+
+    var types = [
+      'ns.1.a.*.card',
+      'ns.1.a.wild.card',
+      'ns.2.a.*.card',
+      'ns.2.a.wild.card',
+    ];
+    var listeners;
+
+    var f = function () {
+      test.ok(true, 'event was raised');
+    };
+
+    for (var i = 0; i < types.length; i++) {
+      emitter.on(types[i], f);
+    }
+
+    // check number of listeners by wild card
+    listeners = emitter.listeners(types[0]);
+    test.equal(listeners.length, 2, 'should only have 2');
+
+    listeners = emitter.listeners(types[2]);
+    test.equal(listeners.length, 2, 'should only have 2');
+
+    // this crazy pattern should remove everything
+    emitter.removeListener('ns.*.a.*.**', f);
+    listeners = emitter.listeners(types[0]);
+    test.equal(listeners.length, 0, 'should be 0');
+    listeners = emitter.listeners(types[1]);
+    test.equal(listeners.length, 0, 'should be 0');
+    console.log(JSON.stringify(emitter.listenerTree));
+    test.equal(Object.keys(emitter.listenerTree).length, 0, 'should not have any keys in tree');
+
+    test.expect(5);
+    test.done();
+  },
+
+  '12. Add some listeners with wildcards and remove only the wildcard' : function (test) {
     var emitter = new EventEmitter2({
       wildcard : true,
       verbose : true
