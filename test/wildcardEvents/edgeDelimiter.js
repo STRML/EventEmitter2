@@ -10,7 +10,7 @@ if(typeof require !== 'undefined') {
 
 module.exports = simpleEvents({
 
-  '1. delimeter at the start': function (test) {
+  '1. delimiter at the start': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true
     });
@@ -24,7 +24,7 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  '2. delimeter at the middle': function (test) {
+  '2. delimiter at the middle': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true
     });
@@ -38,7 +38,7 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  '3. delimeter at the end': function (test) {
+  '3. delimiter at the end': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true
     });
@@ -52,10 +52,10 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  '4. custome delimeter at the start': function (test) {
+  '4. custom delimiter at the start': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true,
-      delimeter: '/'
+      delimiter: '/'
     });
 
     emitter.on('/ns1/ns2', function () {
@@ -67,10 +67,10 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  '5. custome delimeter at the middle': function (test) {
+  '5. custome delimiter at the middle': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true,
-      delimeter: '/'
+      delimiter: '/'
     });
 
     emitter.on('ns1//ns3', function () {
@@ -82,7 +82,7 @@ module.exports = simpleEvents({
     test.expect(1);
     test.done();
   },
-  '6. custome delimeter at the end': function (test) {
+  '6. custome delimiter at the end': function (test) {
     var emitter = new EventEmitter2({
       wildcard: true
     });

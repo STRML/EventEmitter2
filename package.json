@@ -2,7 +2,12 @@
   "name": "eventemitter2",
   "version": "4.1.2",
   "description": "A Node.js event emitter implementation with namespaces, wildcards, TTL and browser support.",
-  "keywords": ["event", "events", "emitter", "eventemitter"],
+  "keywords": [
+    "event",
+    "events",
+    "emitter",
+    "eventemitter"
+  ],
   "author": "hij1nx <paolo@async.ly> http://twitter.com/hij1nx",
   "contributors": [
     "Eric Elliott",
@@ -14,13 +19,14 @@
   "license": "MIT",
   "repository": "git://github.com/hij1nx/EventEmitter2.git",
   "devDependencies": {
-    "nodeunit": "*",
-    "benchmark" : ">= 0.2.2"
+    "benchmark": ">= 0.2.2",
+    "nodeunit": "*"
   },
   "main": "./lib/eventemitter2.js",
-  "scripts" : {
-    "test" : "nodeunit test/simple/ && nodeunit test/wildcardEvents/",
-    "benchmark" : "node test/perf/benchmark.js"
+  "scripts": {
+    "test": "nodeunit test/simple/ && nodeunit test/wildcardEvents/",
+    "benchmark": "node test/perf/benchmark.js",
+    "lint": "eslint lib/*"
   },
   "files": [
     "lib/eventemitter2.js",
@@ -30,5 +36,8 @@
   "typings": "./eventemitter2.d.ts",
   "typescript": {
     "definition": "./eventemitter2.d.ts"
+  },
+  "dependencies": {
+    "eslint": "^4.8.0"
   }
 }
