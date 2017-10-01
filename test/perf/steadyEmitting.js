@@ -172,4 +172,7 @@ suite
   .on('cycle', function(event, bench) {
     console.log(String(event.target));
   })
+  .on('complete', function() {
+    console.log('\nFastest is ' + this.filter('fastest').map((n) => n.name));
+  })
   .run(true);
